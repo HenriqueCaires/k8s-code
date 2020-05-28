@@ -1,9 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: 
-  name: results
-  namespace: instavote
-spec: 
+metadata:
+  name: vote
+spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -15,19 +14,23 @@ spec:
   minReadySeconds: 20
   selector:
     matchLabels:
-      role: results
+      role: vote
     matchExpressions:
       - {key: version, operator: In, values: [v1, v2, v3]}
   template:
     metadata:
       name: vote
       labels:
-        role: results
+        app: python
+        role: vote
         version: v1
     spec:
       containers:
         - name: app
-          image: schoolofdevops/vote-result
+          image: schoolofdevops/vote:v1
+          envFrom:
+            - configMapRef:
+                name: vote
           ports:
             - containerPort: 80
               protocol: TCP

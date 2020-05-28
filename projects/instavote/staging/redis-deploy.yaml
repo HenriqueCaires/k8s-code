@@ -25,12 +25,4 @@ spec:
         ports:
         - containerPort: 6379
           protocol: TCP
-        volumeMounts:
-          - name: redis
-            subPath: redis.conf
-            mountPath: /etc/redis.conf
-      volumes:
-        - name: redis
-          configMap:
-            name: redis
       restartPolicy: Always
