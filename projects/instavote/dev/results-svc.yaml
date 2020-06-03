@@ -9,7 +9,7 @@ spec:
   selector:
     role: results
   ports:
-    - port: 80
+    - port: 82
       targetPort: 80
       nodePort: 30001
   type: NodePort

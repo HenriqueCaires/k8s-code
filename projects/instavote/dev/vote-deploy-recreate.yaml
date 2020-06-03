@@ -4,10 +4,7 @@ metadata:
   name: vote
 spec:
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 1
+    type: Recreate
   revisionHistoryLimit: 4
   paused: false
   replicas: 8
@@ -16,7 +13,7 @@ spec:
     matchLabels:
       role: vote
     matchExpressions:
-      - {key: version, operator: In, values: [v1, v2, v3, v4, v5]}
+      - {key: version, operator: In, values: [v1, v2, v3, v4]}
   template:
     metadata:
       name: vote
@@ -34,10 +31,3 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          resources:
-            limits:
-              cpu: "200m"
-              memory: "250Mi"
-            requests:
-              cpu: "100m"
-              memory: "50Mi"

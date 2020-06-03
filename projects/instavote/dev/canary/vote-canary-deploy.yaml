@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote
+  name: vote-canary
 spec:
   strategy:
     type: RollingUpdate
@@ -10,13 +10,13 @@ spec:
       maxUnavailable: 1
   revisionHistoryLimit: 4
   paused: false
-  replicas: 8
+  replicas: 3
   minReadySeconds: 20
   selector:
     matchLabels:
       role: vote
     matchExpressions:
-      - {key: version, operator: In, values: [v1, v2, v3, v4, v5]}
+      - {key: version, operator: In, values: [v1, v2, v3, v4]}
   template:
     metadata:
       name: vote
@@ -34,10 +34,3 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          resources:
-            limits:
-              cpu: "200m"
-              memory: "250Mi"
-            requests:
-              cpu: "100m"
-              memory: "50Mi"
